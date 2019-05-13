@@ -1047,7 +1047,7 @@
                 this.wgs84 = gcj02towgs84(this.location.longitude, this.location.latitude);
                 $.ajax({
                     type: 'get',
-                    url: '/gpx/lon/' + this.wgs84[0] + '/lat/' + this.wgs84[1],
+                    url: '/gps/lon/' + this.wgs84[0] + '/lat/' + this.wgs84[1],
                     success: function (data) {
                         console.log(data);
                     },
