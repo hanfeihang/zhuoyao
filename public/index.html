@@ -284,11 +284,6 @@
     </transition>
     <transition name="side">
         <div class="side-nav" v-show="showMenu">
-            <div class="side-header">
-                <h2>捉妖雷达 - Web</h2>
-                <p>Version: {{ version }}</p>
-                <p>捉妖雷达开发交流群：1025673494</p>
-            </div>
             <div class="side-content">
                 <div class="header" style="sfont-size:18px;padding-left:10px;padding-top:5px;">筛选</div>
                 <ul>
@@ -345,17 +340,18 @@
                 <div class="header" style="font-size:18px;padding-left:10px;padding-top:5px;">设置</div>
                 <ul>
                     <li>
-                        <span class="tag">点击地图自动搜索</span>
+                        <span class="tag">点击地图自动搜索妖灵</span>
                         <el-switch
-                                v-model="settings.auto_search">
+                                v-model="settings.auto_search_yaoling">
+                        </el-switch>
+                    </li>
+                    <li>
+                        <span class="tag">点击地图自动搜索擂台</span>
+                        <el-switch
+                                v-model="settings.auto_search_leitai">
                         </el-switch>
                     </li>
                 </ul>
-            </div>
-            <div class="side-footer">
-                <iframe
-                        src="https://ghbtns.com/github-btn.html?user=liuzirui1122&repo=zhuoyao_radar&type=star&count=true&size=large"
-                        frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
             </div>
         </div>
     </transition>
@@ -366,9 +362,9 @@
         </div>
     </div>
     <div id="buttons">
+        <el-button size="mini" @click="openMenu">菜单</el-button>
         <el-button size="mini" @click="getYaolingInfo">妖灵</el-button>
         <el-button size="mini" @click="getLeitaiInfo">擂台</el-button>
-        <el-button size="mini" type="warning" @click="debug">Debug</el-button>
         <el-button size="mini" @click="flyToPosition">飞行</el-button>
 
         <!-- <br>
@@ -431,7 +427,8 @@
                     element: false,
                 },
 
-                auto_search: true,
+                auto_search_yaoling: true,
+                auto_search_leitai: false,
             },
 
 
@@ -632,7 +629,12 @@
             clickMap: function (e) {
                 this.messageWarning("位置已重置,请重新筛选");
                 this.setPosition(e.latLng.lng, e.latLng.lat);
-                this.getYaolingInfo();
+                if (this.settings.auto_search_yaoling) {
+                    this.getYaolingInfo();
+                }
+                if (this.settings.auto_search_leitai) {
+                    this.getLeitaiInfo();
+                }
             },
             setPosition: function (lng, lat) {
                 var icon = new qq.maps.MarkerImage("original/image/icon/notify-arrow.png",
@@ -816,7 +818,6 @@
                 console.log(data);
 
                 var c = this.getRequestTypeFromId(data.requestid);
-
                 switch (c) {
                     case "10041":
                         //console.log(1);
@@ -826,7 +827,7 @@
                         //console.log("妖灵等级", n), a.saveBossStartAndEndLevel(n.startlevel, n.endlevel);
                         break;
                     case "1001":
-                        console.log("获取到妖灵数量", data.sprite_list.length);
+                        console.log("获取到妖灵数量", data.sprite_list == null ? 0 : data.sprite_list.length);
                         if (this.botMode) {
                             this.botAnalyze(data.sprite_list);
                         } else {
@@ -853,7 +854,7 @@
             },
 
             buildMarkersByData: function (t, mode) {
-                this.clearAllMarkers();
+                // this.clearAllMarkers();
                 //console.log(t);
                 if (t != null && t.length > 0) {
                     for (var i = 0; i < t.length; i++) {
@@ -1011,6 +1012,7 @@
                     requestid: this.genRequestId("1001"),
                     platform: 0
                 };
+                this.clearAllMarkers();
                 this.sendMessage(e, "1001");
             },
 
@@ -1024,6 +1026,7 @@
                     requestid: this.genRequestId("1002"),
                     platform: 0
                 };
+                this.clearAllMarkers();
                 this.sendMessage(e, "1002");
             },
 
