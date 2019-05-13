@@ -19,7 +19,8 @@
 ## 原理
 
 1、通过微信小程序捉妖雷达的接口将信息展示在地图上
-2、iPhone，修改手机定位
+
+2、手机虚拟定位
   - iPhone：将目标位置生成gpx文件，然后使用Node服务器触发AppleScript，修改iPhone定位。
   - android：可以基于adb来实现，欢迎同学复写gpx.js来实现
 
