@@ -7,7 +7,7 @@
   - 支持妖灵展示、擂台展示
   - 目前仅支持ios虚拟定位，需配合mac使用
   
-![alt text](./docs/zhuoyao.png)
+![alt text](./docs/zhuoyao.jpg)
   
 ## 功能
 
