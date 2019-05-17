@@ -17,7 +17,7 @@ router.get('/lon/:lon/lat/:lat', function (req, res, next) {
     fs.writeFile(gpx_file_position, content, function (error) {
         if (error) {
             console.log(error);
-            return false;
+            return;
         }
         console.log('写入: ' + content);
         // 执行applescript
