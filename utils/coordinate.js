@@ -76,8 +76,7 @@ function wgs84togcj02(lng, lat) {
 function gcj02towgs84(lng, lat) {
     if (out_of_china(lng, lat)) {
         return [lng, lat]
-    }
-    else {
+    } else {
         var dlat = transformlat(lng - 105.0, lat - 35.0);
         var dlng = transformlng(lng - 105.0, lat - 35.0);
         var radlat = lat / 180.0 * PI;
@@ -116,4 +115,8 @@ function transformlng(lng, lat) {
  */
 function out_of_china(lng, lat) {
     return (lng < 72.004 || lng > 137.8347) || ((lat < 0.8293 || lat > 55.8271) || false);
+}
+
+module.exports = {
+    gcj02towgs84
 }
