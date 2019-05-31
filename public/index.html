@@ -2,7 +2,6 @@
 <html lang="zh-cmn-Hans">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +20,7 @@
     <script src="assets/js.cookie.min.js"></script>
     <script src="assets/jquery.min.js"></script>
     <script src="assets/lodash.min.js"></script>
-    <script src="tempdata2.js"></script>
+    <script src="tempdata.js"></script>
 
     <style>
         html,
@@ -355,6 +354,12 @@
                         </el-switch>
                     </li>
                     <li>
+                        <span class="tag">人生赢家</span>
+                        <el-switch
+                                v-model="settings.fit.life_winner">
+                        </el-switch>
+                    </li>
+                    <li>
                         <span class="tag">其他所有（慎选）</span>
                         <el-switch
                                 v-model="settings.fit.all">
@@ -403,17 +408,14 @@
         <el-button size="mini" @click="getYaolingInfo">妖灵</el-button>
         <el-button size="mini" @click="getLeitaiInfo">擂台</el-button>
         <el-button size="mini" @click="flyToPosition">飞行</el-button>
-        <el-button size="mini" @click="listHotPosition">敲鼓</el-button>
+        <el-button size="mini" @click="listHotPosition">保存点</el-button>
         <el-button size="mini" type="warning" @click="wideSearchYaoling(20)">大范围搜索</el-button>
-
+        <!--<el-button size="mini" @click="requestTest">Test</el-button>-->
     </div>
     <div id="qmap"></div>
 </div>
 
-
 <script src="util.js"></script>
-<!--<script src="coordinate.js"></script>-->
-<!-- <script src="WAService.js"></script> -->
 
 <script>
     var app = new Vue({
@@ -431,7 +433,7 @@
 
             reconnectTimeout: 10000,
 
-            currVersion: "sprite_520b92e8846ac5147e1e7d752996a377.json", //190508版本的json 如果有变动手动更新
+            currVersion: "sprite_736ccf43e1837de040108c29c00019d0.json", //https://hy.gwgo.qq.com/sync/pet/config/
             version: "v0.7.510.2157",
             location: {
                 longitude: 120.11328974344576,
@@ -454,6 +456,7 @@
                     feature: false,
                     element: false,
                     ghost: false,
+                    life_winner: false,
                 },
 
                 auto_search_yaoling: true,
@@ -471,7 +474,8 @@
             filter_feature: [2004013, 2004016, 2004010, 2004007, 2004004, 2000206],
             filter_fish: [2000501, 2000502, 2000504, 2000519],
             filter_element: [2000511, 2000512, 2000513, 2000514, 2000515],
-            filter_ghost: [2000271,2000272],
+            filter_ghost: [2000271, 2000272],
+            filter_life_winner: [2000510, 2000509, 2000508, 2000507, 2000506],
 
             current_filter: [],
 
@@ -600,14 +604,13 @@
                 var icon = new qq.maps.MarkerImage("original/image/location.png",
                     null, null, null, new qq.maps.Size(40, 40));
                 if (this.clickMarker != null) {
-                    this.clickMarker.setPosition(new qq.maps.LatLng(lat, lng));
-                } else {
-                    this.clickMarker = new qq.maps.Marker({
-                        position: new qq.maps.LatLng(lat, lng),
-                        map: this.map
-                    });
-                    this.clickMarker.setIcon(icon);
+                    this.clickMarker.setVisible(false);
                 }
+                this.clickMarker = new qq.maps.Marker({
+                    position: new qq.maps.LatLng(lat, lng),
+                    map: this.map
+                });
+                this.clickMarker.setIcon(icon);
 
                 // 设置点击区域
                 var that = this;
@@ -814,11 +817,10 @@
 
 
             handleMessage: function (data) {
-                console.log(data);
+                console.log('handleMessage:' + JSON.stringify(data));
                 var c = this.getRequestTypeFromId(data.requestid);
                 switch (c) {
                     case "10041":
-                        //console.log(1);
                         this.getVersionFileName(data.filename);
                         break;
                     case "10040":
@@ -832,7 +834,7 @@
                         console.log("获取到擂台数量", data.dojo_list == null ? 0 : data.dojo_list.length);
                         this.buildMarkersByData(data.dojo_list, 2);
                         break;
-                    case "1003":
+                    default:
                         console.log("test data", data);
                         break;
                 }
@@ -878,7 +880,7 @@
                             if (ti.winner_fightpower != null) {
                                 infoContent = `<button>战力:${ti.winner_fightpower}</button><br /><button onclick="flyToPositionByLoc(${marker.position.lng},${marker.position.lat})">飞行</button>`;
                             } else if (ti.starlevel != null) {
-                                infoContent = `<button>${ti.starlevel}星BOSS</button><br /><button onclick="flyToPositionByLoc(${marker.position.lng},${marker.position.lat})">飞行</button>`;
+                                infoContent = `<button>${ti.starlevel}星BOSS,状态:${ti.state}</button><br /><button onclick="flyToPositionByLoc(${marker.position.lng},${marker.position.lat})">飞行</button>`;
                             } else {
                                 infoContent = `<button>未知</button><br /><button onclick="flyToPositionByLoc(${marker.position.lng},${marker.position.lat})">飞行</button>`;
                             }
@@ -1051,7 +1053,7 @@
             },
 
             moveToPosition: function (direction) {
-                let speed = 5;
+                let speed = 50;
                 console.log('Before Move GCJ02:' + this.location.longitude + ',' + this.location.latitude);
                 if (direction === 'd') {
                     this.location.longitude = this.location.longitude + 0.00001 * speed;
@@ -1209,6 +1211,16 @@
                 this.sendMessage(e, "10040");
             },
 
+            requestTest: function () {
+                var e = {
+                    request_type: "1002",
+                    cfg_type: 1,
+                    requestid: this.genRequestId("10040"),
+                    platform: 0
+                };
+                this.sendMessage(e, null);
+            },
+
             notify: function (message) {
                 this.$notify({
                     message: message,
@@ -1234,6 +1246,7 @@
                 if (this.settings.fit.feature) ans = _.union(ans, this.filter_feature);
                 if (this.settings.fit.element) ans = _.union(ans, this.filter_element);
                 if (this.settings.fit.ghost) ans = _.union(ans, this.filter_ghost);
+                if (this.settings.fit.life_winner) ans = _.union(ans, this.filter_life_winner);
 
                 return ans;
             }
@@ -1247,5 +1260,4 @@
     });
 </script>
 </body>
-
 </html>
