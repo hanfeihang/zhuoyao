@@ -7,6 +7,7 @@ var router = express.Router();
 
 let gpx_file_position = '/Users/hanfeihang/projects/GodFeet/Location.gpx';
 let apple_script_position = '/Users/hanfeihang/projects/zhuoyao/apple_script/xcode_simulation';
+let apple_script_connect = '/Users/hanfeihang/projects/zhuoyao/apple_script/xcode_connect';
 
 /* GET users listing. */
 router.get('/lon/:lon/lat/:lat', function (req, res, next) {
@@ -36,6 +37,23 @@ router.get('/lon/:lon/lat/:lat', function (req, res, next) {
     });
 
     res.json({lon: req.params.lon, lat: req.params.lat});
+});
+
+/* GET users listing. */
+router.get('/connect', function (req, res, next) {
+
+    console.log('osascript ' + apple_script_connect);
+    // 执行applescript
+    exec('osascript ' + apple_script_connect, (err, stdout, stderr) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        // console.log(`stdout: ${stdout}`);
+        // console.log(`stderr: ${stderr}`);
+    });
+
+    res.json({success: true});
 });
 
 module.exports = router;

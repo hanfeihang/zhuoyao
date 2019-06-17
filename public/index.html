@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>捉妖雷达 web</title>
 
-    <meta name="application-name" content="value"/>
-    <meta name="keywords" content="value"/>
-    <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
+    <meta name="application-name" content="value" />
+    <meta name="keywords" content="value" />
+    <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
 
     <meta name="HandheldFriendly" content="true">
     <script src="assets/vue.js"></script>
@@ -254,20 +254,24 @@
             top: -2.8125rem;
         }
 
-        .side-enter-active, .side-leave-active {
+        .side-enter-active,
+        .side-leave-active {
             transition: opacity .5s, right .5s;
         }
 
-        .side-enter, .side-leave-to {
+        .side-enter,
+        .side-leave-to {
             opacity: 0;
             right: -19.0625rem;
         }
 
-        .black-enter-active, .black-leave-active {
+        .black-enter-active,
+        .black-leave-active {
             transition: opacity .5s;
         }
 
-        .black-enter, .black-leave-to {
+        .black-enter,
+        .black-leave-to {
             opacity: 0;
         }
 
@@ -290,974 +294,985 @@
 </head>
 
 <body>
-<div id="app">
-    <!--<div class="burger-wrap">-->
-    <!--<div class="nav-burger">-->
-    <!--<button class='menu-toggle' @click.prevent="openMenu">Menu</button>-->
-    <!--</div>-->
-    <!--</div>-->
-    <transition name="black">
-        <div class="black-screen" v-show="showBlackCover" @click.prevent="closeSideMenu">
-        </div>
-    </transition>
-    <transition name="side">
-        <div class="side-nav" v-show="showMenu">
-            <div class="side-content">
-                <div class="header" style="sfont-size:18px;padding-left:10px;padding-top:5px;">筛选</div>
-                <ul>
-                    <li>
-                        <span class="tag">稀有</span>
-                        <el-switch
-                                v-model="settings.fit.rare">
-                        </el-switch>
-                    </li>
-                    <li>
-                        <span class="tag">1觉</span>
-                        <el-switch
-                                v-model="settings.fit.t1">
-                        </el-switch>
-                    </li>
-                    <li>
-                        <span class="tag">2觉</span>
-                        <el-switch
-                                v-model="settings.fit.t2">
-                        </el-switch>
-                    </li>
-                    <li>
-                        <span class="tag">巢穴</span>
-                        <el-switch
-                                v-model="settings.fit.nest">
-                        </el-switch>
-                    </li>
-                    <li>
-                        <span class="tag">地域</span>
-                        <el-switch
-                                v-model="settings.fit.feature">
-                        </el-switch>
-                    </li>
-                    <li>
-                        <span class="tag">鲲鲲</span>
-                        <el-switch
-                                v-model="settings.fit.fish">
-                        </el-switch>
-                    </li>
-                    <li>
-                        <span class="tag">元素</span>
-                        <el-switch
-                                v-model="settings.fit.element">
-                        </el-switch>
-                    </li>
-                    <li>
-                        <span class="tag">鬼魂</span>
-                        <el-switch
-                                v-model="settings.fit.ghost">
-                        </el-switch>
-                    </li>
-                    <li>
-                        <span class="tag">人生赢家</span>
-                        <el-switch
-                                v-model="settings.fit.life_winner">
-                        </el-switch>
-                    </li>
-                    <li>
-                        <span class="tag">其他所有（慎选）</span>
-                        <el-switch
-                                v-model="settings.fit.all">
-                        </el-switch>
-                    </li>
-                </ul>
-                <div class="hr"></div>
-                <div class="header" style="font-size:18px;padding-left:10px;padding-top:5px;">设置</div>
-                <ul>
-                    <li>
-                        <span class="tag">点击地图自动搜索妖灵</span>
-                        <el-switch
-                                v-model="settings.auto_search_yaoling">
-                        </el-switch>
-                    </li>
-                    <li>
-                        <span class="tag">点击地图自动搜索擂台</span>
-                        <el-switch
-                                v-model="settings.auto_search_leitai">
-                        </el-switch>
-                    </li>
-                </ul>
+    <div id="app">
+        <!--<div class="burger-wrap">-->
+        <!--<div class="nav-burger">-->
+        <!--<button class='menu-toggle' @click.prevent="openMenu">Menu</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <transition name="black">
+            <div class="black-screen" v-show="showBlackCover" @click.prevent="closeSideMenu">
             </div>
-        </div>
-    </transition>
-    <transition name="side">
-        <div class="hot-position-nav" v-show="show_hot_position">
-            <div class="side-content">
-                <div class="header" style="sfont-size:18px;padding-left:10px;padding-top:5px;">坐标</div>
-                <el-scrollbar>
-                    <ol id="example-1">
-                        <li class="fontset" v-for="item in hot_position_list">
-                            <button @click="flyToPositionByLoc(item.lng,item.lat)">飞行</button>
-                            <button @click="deletePosition(item.lng,item.lat)">删除</button>
-                            <button>{{item.time}}</button>
-                            <button v-if="isCurrentPosition(item.lng,item.lat)" style="color:#FF0000">当前</button>
+        </transition>
+        <transition name="side">
+            <div class="side-nav" v-show="showMenu">
+                <div class="side-content">
+                    <div class="header" style="font-size:18px;padding-left:10px;padding-top:5px;">筛选</div>
+                    <ul>
+                        <li>
+                            <span class="tag">稀有</span>
+                            <el-switch v-model="settings.fit.rare">
+                            </el-switch>
                         </li>
-                    </ol>
-                </el-scrollbar>
+                        <li>
+                            <span class="tag">1觉</span>
+                            <el-switch v-model="settings.fit.t1">
+                            </el-switch>
+                        </li>
+                        <li>
+                            <span class="tag">2觉</span>
+                            <el-switch v-model="settings.fit.t2">
+                            </el-switch>
+                        </li>
+                        <li>
+                            <span class="tag">巢穴</span>
+                            <el-switch v-model="settings.fit.nest">
+                            </el-switch>
+                        </li>
+                        <li>
+                            <span class="tag">地域</span>
+                            <el-switch v-model="settings.fit.feature">
+                            </el-switch>
+                        </li>
+                        <li>
+                            <span class="tag">鲲鲲</span>
+                            <el-switch v-model="settings.fit.fish">
+                            </el-switch>
+                        </li>
+                        <li>
+                            <span class="tag">元素</span>
+                            <el-switch v-model="settings.fit.element">
+                            </el-switch>
+                        </li>
+                        <li>
+                            <span class="tag">鬼魂</span>
+                            <el-switch v-model="settings.fit.ghost">
+                            </el-switch>
+                        </li>
+                        <li>
+                            <span class="tag">人生赢家</span>
+                            <el-switch v-model="settings.fit.life_winner">
+                            </el-switch>
+                        </li>
+                        <li>
+                            <span class="tag">28星宿</span>
+                            <el-switch v-model="settings.fit.stars_28">
+                            </el-switch>
+                        </li>
+                        <li>
+                            <span class="tag">其他所有（慎选）</span>
+                            <el-switch v-model="settings.fit.all">
+                            </el-switch>
+                        </li>
+                    </ul>
+                    <div class="hr"></div>
+                    <div class="header" style="font-size:18px;padding-left:10px;padding-top:5px;">设置</div>
+                    <ul>
+                        <li>
+                            <span class="tag">点击地图自动搜索妖灵</span>
+                            <el-switch v-model="settings.auto_search_yaoling">
+                            </el-switch>
+                        </li>
+                        <li>
+                            <span class="tag">点击地图自动搜索擂台</span>
+                            <el-switch v-model="settings.auto_search_leitai">
+                            </el-switch>
+                        </li>
+                    </ul>
+                </div>
             </div>
+        </transition>
+        <transition name="side">
+            <div class="hot-position-nav" v-show="show_hot_position">
+                <div class="side-content">
+                    <div class="header" style="font-size:18px;padding-left:10px;padding-top:5px;">坐标</div>
+                    <el-scrollbar>
+                        <ol id="example-1">
+                            <li class="fontset" v-for="item in hot_position_list">
+                                <button @click="flyToPositionByLoc(item.lng,item.lat)">飞行</button>
+                                <button @click="deletePosition(item.lng,item.lat)">删除</button>
+                                <button>{{item.time}}</button>
+                                <button v-if="isCurrentPosition(item.lng,item.lat)" style="color:#FF0000">当前</button>
+                            </li>
+                        </ol>
+                    </el-scrollbar>
+                </div>
+            </div>
+        </transition>
+        <div id="buttons">
+            <el-button size="mini" @click="openMenu">菜单</el-button>
+            <el-button size="mini" @click="reconnectSocket">重连</el-button>
+            <el-button size="mini" @click="getYaolingInfo">妖灵</el-button>
+            <el-button size="mini" @click="getLeitaiInfo">擂台</el-button>
+            <el-button size="mini" @click="flyToPosition">飞行</el-button>
+            <el-button size="mini" @click="listHotPosition">保存点</el-button>
+            <el-button size="mini" type="warning" @click="wideSearchYaoling(20)">大范围搜索</el-button>
+            <el-button size="mini" @click="connectPhone">连接手机</el-button>
+            <!--<el-button size="mini" @click="requestTest">Test</el-button>-->
         </div>
-    </transition>
-    <div id="buttons">
-        <el-button size="mini" @click="openMenu">菜单</el-button>
-        <el-button size="mini" @click="reconnectSocket">重连</el-button>
-        <el-button size="mini" @click="getYaolingInfo">妖灵</el-button>
-        <el-button size="mini" @click="getLeitaiInfo">擂台</el-button>
-        <el-button size="mini" @click="flyToPosition">飞行</el-button>
-        <el-button size="mini" @click="listHotPosition">保存点</el-button>
-        <el-button size="mini" type="warning" @click="wideSearchYaoling(20)">大范围搜索</el-button>
-        <!--<el-button size="mini" @click="requestTest">Test</el-button>-->
+        <div id="qmap"></div>
     </div>
-    <div id="qmap"></div>
-</div>
 
-<script src="util.js"></script>
+    <script src="util.js"></script>
 
-<script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            status: "",
-            socket: {},
-            apikey: "2LWBZ-FEQK6-KKYS2-M6WR4-PFGS5-RZBP3",
-            map: {},
-            clickMarker: null,
-            userMarker: null,
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                status: "",
+                socket: {},
+                apikey: "2LWBZ-FEQK6-KKYS2-M6WR4-PFGS5-RZBP3",
+                map: {},
+                clickMarker: null,
+                userMarker: null,
 
-            firstTime: true,
-            url: "wss://publicld.gwgo.qq.com?account_value=0&account_type=0&appid=0&token=0",
+                firstTime: true,
+                url: "wss://publicld.gwgo.qq.com?account_value=0&account_type=0&appid=0&token=0",
 
-            reconnectTimeout: 10000,
+                reconnectTimeout: 10000,
 
-            currVersion: "sprite_736ccf43e1837de040108c29c00019d0.json", //https://hy.gwgo.qq.com/sync/pet/config/
-            version: "v0.7.510.2157",
-            location: {
-                longitude: 120.11328974344576,
-                latitude: 30.28110036590626,
-            },
-
-            statusOK: false,
-            yaolings: {},
-
-            markers: [],
-
-            settings: {
-                fit: {
-                    t1: false,
-                    t2: false,
-                    all: false,
-                    nest: false,
-                    rare: true,
-                    fish: false,
-                    feature: false,
-                    element: false,
-                    ghost: false,
-                    life_winner: false,
+                currVersion: "sprite_18b3306a1d7dda37b41d2d458e00a0a8.json", //https://hy.gwgo.qq.com/sync/pet/config/
+                version: "v0.7.510.2157",
+                location: {
+                    longitude: 120.11328974344576,
+                    latitude: 30.28110036590626,
                 },
 
-                auto_search_yaoling: true,
-                auto_search_leitai: false,
+                statusOK: false,
+                yaolings: {},
+
+                markers: [],
+
+                settings: {
+                    fit: {
+                        t1: false,
+                        t2: false,
+                        all: false,
+                        nest: false,
+                        rare: true,
+                        fish: false,
+                        feature: false,
+                        element: false,
+                        ghost: false,
+                        life_winner: false,
+                        stars_28: false,
+                    },
+
+                    auto_search_yaoling: true,
+                    auto_search_leitai: false,
+                },
+
+
+                filter_rare: [2000106, 2000313, 2000327, 2000265, 2000238, 2000242],
+                filter_t2: [],
+                filter_t1: [],
+                filter_nest: [2000321, 2000324, 2000112],
+                filter_feature: [2004013, 2004016, 2004010, 2004007, 2004004, 2000206],
+                filter_fish: [2000501, 2000502, 2000504, 2000519],
+                filter_element: [2000511, 2000512, 2000513, 2000514, 2000515],
+                filter_ghost: [2000271, 2000272],
+                filter_life_winner: [2000510, 2000509, 2000508, 2000507, 2000506],
+                filter_stars_28: [2000401, 2000402, 2000403, 2000404, 2000405, 2000406, 2000407, 2000408, 2000409, 2000410, 2000411, 2000412, 2000413, 2000414, 2000415, 2000416, 2000417, 2000418, 2000419, 2000420, 2000421, 2000422, 2000423, 2000424, 2000425],
+
+                current_filter: [],
+
+                showMenu: false,
+                showBlackCover: false,
+
+                lat_range: 0.015,
+                lng_range_right: 0.0158,
+                lng_range_left: 0.0192,
+
+                wideSearching: false,
+                wideSearchQueue: [],
+                wideSearchYaolings: [],
+                fullscreenLoading: false,
+                wideSearchTimeout: null,
+
+                drawRecs: [],
+
+                show_hot_position: false,
+                hot_position_list: [],
             },
-
-
-            filter_rare: [
-                2000106, 2000313, 2000327, 2000265, 2000238,
-                2000242, 2000147, 2000188
-            ],
-            filter_t2: [],
-            filter_t1: [],
-            filter_nest: [2000321, 2000324, 2000112],
-            filter_feature: [2004013, 2004016, 2004010, 2004007, 2004004, 2000206],
-            filter_fish: [2000501, 2000502, 2000504, 2000519],
-            filter_element: [2000511, 2000512, 2000513, 2000514, 2000515],
-            filter_ghost: [2000271, 2000272],
-            filter_life_winner: [2000510, 2000509, 2000508, 2000507, 2000506],
-
-            current_filter: [],
-
-            showMenu: false,
-            showBlackCover: false,
-
-            lat_range: 0.015,
-            lng_range_right: 0.0158,
-            lng_range_left: 0.0192,
-
-            wideSearching: false,
-            wideSearchQueue: [],
-            wideSearchYaolings: [],
-            fullscreenLoading: false,
-            wideSearchTimeout: null,
-
-            drawRecs: [],
-
-            show_hot_position: false,
-            hot_position_list: [],
-        },
-        created: function () {
-            this.getCookies();
-        },
-        mounted: function () {
-            this.getLocation();
-
-            this.addStatus("捉妖雷达Web版");
-
-            //第一次默认打开菜单
-            this.$nextTick(_ => {
-                if (typeof (Cookies.get("radar_settings")) == "undefined") {
-                    this.openMenu();
-                }
-            });
-
-        },
-        methods: {
-            openMenu() {
-                $(".nav-burger").toggleClass("active");
-                this.showMenu = true;
-                this.showBlackCover = true;
+            created: function () {
+                this.getCookies();
             },
-            closeSideMenu() {
-                this.showMenu = false;
-                this.showBlackCover = false;
-                this.show_hot_position = false;
-            },
-            getCookies: function () {
-                if (typeof (Cookies.get("radar_settings")) != "undefined") {
-                    this.settings = Cookies.getJSON("radar_settings");
-                }
-            },
-            flashCookies: function () {
-                Cookies.set("radar_settings", this.settings);
-            },
-            init: function () {
-                if (!isNaN(window.localStorage.my_latitude) && !isNaN(window.localStorage.my_longitude)) {
-                    this.location.longitude = window.localStorage.my_longitude;
-                    this.location.latitude = window.localStorage.my_latitude;
-                }
+            mounted: function () {
+                this.getLocation();
 
-                this.map = new qq.maps.Map(document.getElementById("qmap"), {
-                    center: new qq.maps.LatLng(this.location.latitude, this.location.longitude),
-                    zoom: 16, // 地图的中心地理坐标。
+                this.addStatus("捉妖雷达Web版");
+
+                //第一次默认打开菜单
+                this.$nextTick(_ => {
+                    if (typeof (Cookies.get("radar_settings")) == "undefined") {
+                        this.openMenu();
+                    }
                 });
 
-                this.setPosition(this.location.longitude, this.location.latitude);
+            },
+            methods: {
+                openMenu() {
+                    $(".nav-burger").toggleClass("active");
+                    this.showMenu = true;
+                    this.showBlackCover = true;
+                },
+                closeSideMenu() {
+                    this.showMenu = false;
+                    this.showBlackCover = false;
+                    this.show_hot_position = false;
+                },
+                getCookies: function () {
+                    if (typeof (Cookies.get("radar_settings")) != "undefined") {
+                        this.settings = Cookies.getJSON("radar_settings");
+                    }
+                },
+                flashCookies: function () {
+                    Cookies.set("radar_settings", this.settings);
+                },
+                init: function () {
+                    if (!isNaN(window.localStorage.my_latitude) && !isNaN(window.localStorage.my_longitude)) {
+                        this.location.longitude = window.localStorage.my_longitude;
+                        this.location.latitude = window.localStorage.my_latitude;
+                    }
 
-                qq.maps.event.addListener(
-                    this.map,
-                    'click',
-                    this.clickMap,
-                );
-
-                //标记Marker点击事件
-                let that = this;
-                $(document).ready(
-                    function () {
-                        document.onkeydown = function () {
-                            var oEvent = window.event;
-                            console.log(oEvent);
-                            if (oEvent.key === 's'
-                                || oEvent.key === 'w'
-                                || oEvent.key === 'a'
-                                || oEvent.key === 'd') {
-                                that.moveToPosition(oEvent.key);
-                            }
-                        }
+                    this.map = new qq.maps.Map(document.getElementById("qmap"), {
+                        center: new qq.maps.LatLng(this.location.latitude, this.location.longitude),
+                        zoom: 16, // 地图的中心地理坐标。
                     });
 
-                this.connectSocket();
+                    this.setPosition(this.location.longitude, this.location.latitude);
 
-                //添加到提示窗
-                this.infoWindow = new qq.maps.InfoWindow({
-                    map: this.map
-                });
-
-                window.flyToPositionByLoc = this.flyToPositionByLoc;
-                window.setPosition = this.setPosition;
-                window.savePosition = this.savePosition;
-                window.deletePosition = this.deletePosition;
-            },
-
-            clickMap: function (e) {
-                this.messageWarning("位置已重置");
-                this.setPosition(e.latLng.lng, e.latLng.lat);
-                if (this.settings.auto_search_yaoling) {
-                    this.getYaolingInfo();
-                }
-                if (this.settings.auto_search_leitai) {
-                    this.getLeitaiInfo();
-                }
-            },
-
-            isCurrentPosition: function (lng, lat) {
-                return this.location.longitude == lng && this.location.latitude == lat;
-            },
-
-            setPosition: function (lng, lat) {
-                if (this.infoWindow != null) {
-                    this.infoWindow.close();
-                }
-                // this.closeSideMenu();
-
-                var icon = new qq.maps.MarkerImage("original/image/location.png",
-                    null, null, null, new qq.maps.Size(40, 40));
-                if (this.clickMarker != null) {
-                    this.clickMarker.setVisible(false);
-                }
-                this.clickMarker = new qq.maps.Marker({
-                    position: new qq.maps.LatLng(lat, lng),
-                    map: this.map
-                });
-                this.clickMarker.setIcon(icon);
-
-                // 设置点击区域
-                var that = this;
-                qq.maps.event.addListener(this.clickMarker, 'click', function () {
-                    that.infoWindow.open();
-                    that.infoWindow.setContent(
-                        '<button onclick="savePosition(' + lng + ',' + lat + ')">保存为敲鼓点</button><br />' +
-                        '<button onclick="flyToPositionByLoc(' + lng + ',' + lat + ')">飞行</button>'
+                    qq.maps.event.addListener(
+                        this.map,
+                        'click',
+                        this.clickMap,
                     );
-                    that.infoWindow.setPosition(that.clickMarker.getPosition());
-                });
 
-
-                this.location.longitude = parseFloat(lng);
-                this.location.latitude = parseFloat(lat);
-                window.localStorage.setItem("my_latitude", this.location.latitude);
-                window.localStorage.setItem("my_longitude", this.location.longitude);
-            },
-
-            savePosition: function (lng, lat) {
-                $.ajax({
-                    type: 'get',
-                    url: '/hot_position/save/lng/' + lng + '/lat/' + lat,
-                    success: function (data) {
-                        console.log(data);
-                    },
-                    error: function (err) {
-                        console.log(err)
-                    }
-                });
-            },
-
-            deletePosition: function (lng, lat) {
-                let that = this;
-                $.ajax({
-                    type: 'get',
-                    url: '/hot_position/delete/lng/' + lng + '/lat/' + lat,
-                    success: function (data) {
-                        console.log(data);
-                        that.listHotPosition();
-                    },
-                    error: function (err) {
-                        console.log(err)
-                    }
-                });
-            },
-
-            listHotPosition: function () {
-                let that = this;
-                $.ajax({
-                    type: 'get',
-                    url: '/hot_position/get',
-                    success: function (data) {
-                        that.hot_position_list = JSON.parse(data);
-                        $(".hot-position-nav").toggleClass("active");
-                        that.show_hot_position = true;
-                        that.showBlackCover = true;
-                    },
-                    error: function (err) {
-                        console.log(err)
-                    }
-                });
-            },
-
-            getYaolings: function () {
-                this.yaolings = tempdata.Data;
-                this.generateFilters();
-                this.statusOK = true;
-            },
-
-            generateFilters: function () {
-                for (var i = 0; i < this.yaolings.length; i++) {
-                    var yi = this.yaolings[i];
-                    if (yi.Level === 3) {
-                        this.filter_t2.push(yi.Id);
-                    }
-                    if (yi.Level === 2) {
-                        this.filter_t1.push(yi.Id);
-                    }
-                }
-            },
-            genRequestId: function (n) {
-                var g = new Date().getTime() % 1234567;
-                switch (n) {
-                    case "1001":
-                        unknownKey[0] = g;
-                        break;
-
-                    case "1002":
-                        unknownKey[1] = g;
-                        break;
-
-                    case "1003":
-                        unknownKey[2] = g;
-                        break;
-
-                    case "10040":
-                        unknownKey[3] = g;
-                        break;
-
-                    case "10041":
-                        unknownKey[4] = g;
-                }
-                return g;
-            },
-            getRequestTypeFromId: function (n) {
-                return unknownKey[0] === n ? "1001" : unknownKey[1] === n ? "1002" : unknownKey[2] === n ?
-                    "1003" : unknownKey[3] === n ? "10040" : unknownKey[4] === n ? "10041" : 0;
-            },
-            convertLocation: function (n) {
-                let g = n.toFixed(6);
-                return parseInt(1e6 * g);
-            },
-            utf8ByteToUnicodeStr: function (n) {
-                for (var g = "", p = 0; p < n.length;) {
-                    var e = n[p],
-                        a = 0;
-                    e >>> 7 == 0 ? (g += String.fromCharCode(n[p]), p += 1) : 252 == (252 & e) ? (a = (
-                        3 & n[p]) << 30,
-                        a |= (63 & n[p + 1]) << 24, a |= (63 & n[p + 2]) << 18, a |= (63 & n[p +
-                    3]) << 12,
-                        a |= (63 & n[p + 4]) << 6, a |= 63 & n[p + 5], g += String.fromCharCode(a),
-                        p += 6) : 248 == (248 & e) ? (a = (7 & n[p]) << 24,
-                        a |= (63 & n[p + 1]) << 18, a |= (63 & n[p + 2]) << 12, a |= (63 & n[p +
-                    3]) << 6,
-                        a |= 63 & n[p + 4], g += String.fromCharCode(a), p += 5) : 240 == (240 &
-                        e) ? (a = (15 & n[p]) << 18,
-                        a |= (63 & n[p + 1]) << 12, a |= (63 & n[p + 2]) << 6, a |= 63 & n[p + 3],
-                        g += String.fromCharCode(a),
-                        p += 4) : 224 == (224 & e) ? (a = (31 & n[p]) << 12, a |= (63 & n[p + 1]) <<
-                        6,
-                        a |= 63 & n[p + 2], g += String.fromCharCode(a), p += 3) : 192 == (192 &
-                        e) ? (a = (63 & n[p]) << 6,
-                        a |= 63 & n[p + 1], g += String.fromCharCode(a), p += 2) : (g += String
-                        .fromCharCode(n[p]),
-                        p += 1);
-                }
-                return g;
-            },
-
-
-            connectSocket: function () {
-                this.socket = new WebSocket(this.url);
-                this.socket.onclose = this.onSocketClose;
-                this.socket.onerror = this.onSocketError;
-                this.socket.onopen = this.onSocketOpen;
-                this.socket.onmessage = this.onSocketMessage;
-            },
-
-            reconnectSocket: function () {
-                this.addStatus("重连中");
-                this.connectSocket();
-            },
-
-            onSocketOpen: function () {
-                this.addStatus("WSS连接开启");
-                this.notify("WSS连接开启");
-                if (this.firstTime) {
-                    this.firstTime = false;
-                    this.getSettingFileName();
-                    this.getBossLevelConfig();
-                }
-            },
-
-            onSocketMessage: function (event) {
-                var blob = event.data;
-                var arrayBuffer;
-
-                if (typeof (blob) === "string") {
-                    // var ans = blob;
-                    // this.addStatusWithoutNewline("WSS连接信息：");
-                    // this.addStatus(ans);
-                } else {
-                    let fileReader = new FileReader();
-                    fileReader.onload = e => {
-                        arrayBuffer = e.target.result;
-                        var n = this.utf8ByteToUnicodeStr(new Uint8Array(arrayBuffer).slice(4));
-                        //this.addStatusWithoutNewline("WSS连接信息：");
-                        //this.addStatus(n);
-                        var data = JSON.parse(n);
-                        this.handleMessage(data)
-                    };
-                    fileReader.readAsArrayBuffer(blob)
-                }
-            },
-
-            onSocketClose: function () {
-                this.addStatus("WSS连接关闭");
-                this.notify("WSS连接关闭");
-                // setTimeout(() => {
-                //     this.addStatus("重连中");
-                //     this.connectSocket();
-                // }, this.reconnectTimeout);
-            },
-
-            onSocketError: function () {
-                // this.addStatus("WSS连接错误");
-                // this.notify("WSS连接错误");
-                // setTimeout(() => {
-                //     this.addStatus("重连中");
-                //     this.connectSocket();
-                // }, this.reconnectTimeout);
-            },
-
-
-            handleMessage: function (data) {
-                console.log('handleMessage:' + JSON.stringify(data));
-                var c = this.getRequestTypeFromId(data.requestid);
-                switch (c) {
-                    case "10041":
-                        this.getVersionFileName(data.filename);
-                        break;
-                    case "10040":
-                        //console.log("妖灵等级", n), a.saveBossStartAndEndLevel(n.startlevel, n.endlevel);
-                        break;
-                    case "1001":
-                        console.log("获取到妖灵数量", data.sprite_list == null ? 0 : data.sprite_list.length);
-                        this.buildMarkersByData(data.sprite_list, 1);
-                        break;
-                    case "1002":
-                        console.log("获取到擂台数量", data.dojo_list == null ? 0 : data.dojo_list.length);
-                        this.buildMarkersByData(data.dojo_list, 2);
-                        break;
-                    default:
-                        console.log("test data", data);
-                        break;
-                }
-            },
-            getVersionFileName: function (name) {
-                if (name !== this.currVersion) {
-                    this.getYaolings(name);
-                    console.info("有新版本的icon!");
-                    this.messageWarning("有新版本的妖灵库，请通知作者更新！！");
-                } else {
-                    this.getYaolings(this.currVersion);
-                }
-            },
-
-            buildMarkersByData: function (t, mode) {
-                let that = this;
-                if (t != null && t.length > 0) {
-                    for (let i = 0; i < t.length; i++) {
-                        let ti = t[i];
-
-                        if (mode === 1) {
-                            // 妖灵
-                            if (this.fit.length === 1 && this.fit[0] === "special") {
-
-                            } else {
-                                if ($.inArray(ti.sprite_id, this.fit) === -1) continue;
+                    //标记Marker点击事件
+                    let that = this;
+                    $(document).ready(
+                        function () {
+                            document.onkeydown = function () {
+                                var oEvent = window.event;
+                                console.log(oEvent);
+                                if (oEvent.key === 's'
+                                    || oEvent.key === 'w'
+                                    || oEvent.key === 'a'
+                                    || oEvent.key === 'd') {
+                                    that.moveToPosition(oEvent.key);
+                                }
                             }
-                        } else if (mode === 2) {
-                            // 擂台
-
-                        }
-
-                        let m = this.buildSpiteMarker(ti, mode);
-                        let icon = new qq.maps.MarkerImage(m.iconPath,
-                            null, null, null, new qq.maps.Size(40, 40));
-                        let marker = new qq.maps.Marker({
-                            position: new qq.maps.LatLng(m.latitude, m.longitude),
-                            map: this.map
-                        });
-                        marker.setIcon(icon);
-                        let infoContent = null;
-                        if (mode === 2) {
-                            if (ti.winner_fightpower != null) {
-                                infoContent = `<button>战力:${ti.winner_fightpower}</button><br /><button onclick="flyToPositionByLoc(${marker.position.lng},${marker.position.lat})">飞行</button>`;
-                            } else if (ti.starlevel != null) {
-                                infoContent = `<button>${ti.starlevel}星BOSS,状态:${ti.state}</button><br /><button onclick="flyToPositionByLoc(${marker.position.lng},${marker.position.lat})">飞行</button>`;
-                            } else {
-                                infoContent = `<button>未知</button><br /><button onclick="flyToPositionByLoc(${marker.position.lng},${marker.position.lat})">飞行</button>`;
-                            }
-                        } else {
-                            infoContent = `<button onclick="flyToPositionByLoc(${marker.position.lng},${marker.position.lat})">飞行</button>`;
-                        }
-                        qq.maps.event.addListener(marker, 'click', function () {
-                            that.infoWindow.open();
-                            that.infoWindow.setContent(infoContent);
-                            that.infoWindow.setPosition(marker.getPosition());
                         });
 
-                        this.markers.push(marker);
+                    this.connectSocket();
+
+                    //添加到提示窗
+                    this.infoWindow = new qq.maps.InfoWindow({
+                        map: this.map
+                    });
+
+                    window.flyToPositionByLoc = this.flyToPositionByLoc;
+                    window.setPosition = this.setPosition;
+                    window.savePosition = this.savePosition;
+                    window.deletePosition = this.deletePosition;
+                },
+
+                clickMap: function (e) {
+                    this.messageWarning("位置已重置");
+                    this.setPosition(e.latLng.lng, e.latLng.lat);
+                    if (this.settings.auto_search_yaoling) {
+                        this.getYaolingInfo();
                     }
-                }
-                this.notify("筛选成功!");
-            },
+                    if (this.settings.auto_search_leitai) {
+                        this.getLeitaiInfo();
+                    }
+                },
 
-            clearAllMarkers: function () {
-                for (var i = 0; i < this.markers.length; i++) {
-                    this.markers[i].setMap(null);
-                }
-                this.markers = [];
-            },
+                isCurrentPosition: function (lng, lat) {
+                    return this.location.longitude == lng && this.location.latitude == lat;
+                },
 
-            buildSpiteMarker: function (ti, mode) {
+                setPosition: function (lng, lat) {
+                    if (this.infoWindow != null) {
+                        this.infoWindow.close();
+                    }
+                    // this.closeSideMenu();
 
-                var icon = this.getHeadImagePath(ti, mode);
-                return {
-                    // id: id,
-                    latitude: ti.latitude / 1e6,
-                    longitude: ti.longtitude / 1e6,
-                    iconPath: icon,
-                    width: 40,
-                    height: 40,
-                };
-            },
-            //根据妖灵信息获取其icon地址
-            getHeadImagePath: function (e, mode) {
-                if (mode === 1) {
-                    // 妖
-                    var webpath = "https://hy.gwgo.qq.com/sync/pet/";
-                    var a = this.getYaoling(e.sprite_id);
-                    if (null == a)
-                        return "original/image/default-head.png";
-                    var r = "original/image/head/" + a.ImgName + ".png";
-                    return pngs.indexOf(a.ImgName + ".png") >= 0 ? r : webpath + a.SmallImgPath;
-                } else if (mode === 2) {
-                    // 擂台
-                    return "original/image/head/leitai.png";
-                } else {
-                    return "original/image/default-head.png";
-                }
-            },
+                    var icon = new qq.maps.MarkerImage("original/image/location.png",
+                        null, null, null, new qq.maps.Size(40, 40));
+                    if (this.clickMarker != null) {
+                        this.clickMarker.setVisible(false);
+                    }
+                    this.clickMarker = new qq.maps.Marker({
+                        position: new qq.maps.LatLng(lat, lng),
+                        map: this.map
+                    });
+                    this.clickMarker.setIcon(icon);
 
-            setFilter: function (str, f) {
-                this.current_filter = f;
-                this.addStatus("已修改筛选规则：" + str);
-            },
+                    // 设置点击区域
+                    var that = this;
+                    qq.maps.event.addListener(this.clickMarker, 'click', function () {
+                        that.infoWindow.open();
+                        that.infoWindow.setContent(
+                            '<button onclick="savePosition(' + lng + ',' + lat + ')">保存为敲鼓点</button><br />' +
+                            '<button onclick="flyToPositionByLoc(' + lng + ',' + lat + ')">飞行</button>'
+                        );
+                        that.infoWindow.setPosition(that.clickMarker.getPosition());
+                    });
 
-            //消息通知
-            messageWarning: function (message) {
-                this.notify(message);
-            },
 
-            arrayBufferToBase64: function (buffer) {
-                var binary = '';
-                var bytes = new Uint8Array(buffer);
-                var len = bytes.byteLength;
-                for (var i = 0; i < len; i++) {
-                    binary += String.fromCharCode(bytes[i]);
-                }
-                return window.btoa(binary);
-            },
-            abc1: function (e) {
-                for (var n = new ArrayBuffer(2 * e.length), r = new Uint16Array(n), t = 0, o = e
-                    .length; t < o; t++) r[t] = e.charCodeAt(t);
-                return r;
-            },
-            json2buffer: function (n) {
-                var r = this.abc1(JSON.stringify(n)),
-                    t = r.length,
-                    o = new ArrayBuffer(4);
-                new DataView(o).setUint32(0, t);
-                var s = new Uint8Array(4 + t);
-                return s.set(new Uint8Array(o), 0), s.set(r, 4), s.buffer;
-            },
-            addStatusWithoutNewline: function (str) {
-                this.status += str;
-            },
-            addStatus: function (str) {
-                this.status += str + "<br>";
-            },
-            sendMessage: function (message, requestIndex) {
-                if (message.request_type != "1004") {
-                    this.addStatusWithoutNewline("WSS发送消息：");
-                    this.addStatus(JSON.stringify(message));
-                }
-                this.socket.send(this.json2buffer(message));
-            },
-            getLocation: function () {
-                var that = this;
-                that.init();
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        function (position) {
-                            console.log(position);
-                            that.location.longitude = position.coords.longitude;
-                            that.location.latitude = position.coords.latitude;
+                    this.location.longitude = parseFloat(lng);
+                    this.location.latitude = parseFloat(lat);
+                    window.localStorage.setItem("my_latitude", this.location.latitude);
+                    window.localStorage.setItem("my_longitude", this.location.longitude);
+                },
 
-                            var pos = new qq.maps.LatLng(that.location.latitude, that.location
-                                .longitude);
-                            that.map.panTo(pos);
-                            that.userMarker = new qq.maps.Marker({
-                                position: pos,
-                                map: that.map
+                savePosition: function (lng, lat) {
+                    $.ajax({
+                        type: 'get',
+                        url: '/hot_position/save/lng/' + lng + '/lat/' + lat,
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    });
+                },
+
+                deletePosition: function (lng, lat) {
+                    let that = this;
+                    $.ajax({
+                        type: 'get',
+                        url: '/hot_position/delete/lng/' + lng + '/lat/' + lat,
+                        success: function (data) {
+                            console.log(data);
+                            that.listHotPosition();
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    });
+                },
+
+                listHotPosition: function () {
+                    let that = this;
+                    $.ajax({
+                        type: 'get',
+                        url: '/hot_position/get',
+                        success: function (data) {
+                            that.hot_position_list = JSON.parse(data);
+                            $(".hot-position-nav").toggleClass("active");
+                            that.show_hot_position = true;
+                            that.showBlackCover = true;
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    });
+                },
+
+                getYaolings: function () {
+                    this.yaolings = tempdata.Data;
+                    this.generateFilters();
+                    this.statusOK = true;
+                    console.log('statusOK:', true);
+                },
+
+                generateFilters: function () {
+                    for (var i = 0; i < this.yaolings.length; i++) {
+                        var yi = this.yaolings[i];
+                        if (yi.Level === 3) {
+                            this.filter_t2.push(yi.Id);
+                        }
+                        if (yi.Level === 2) {
+                            this.filter_t1.push(yi.Id);
+                        }
+                    }
+                },
+                genRequestId: function (n) {
+                    var g = new Date().getTime() % 1234567;
+                    switch (n) {
+                        case "1001":
+                            unknownKey[0] = g;
+                            break;
+
+                        case "1002":
+                            unknownKey[1] = g;
+                            break;
+
+                        case "1003":
+                            unknownKey[2] = g;
+                            break;
+
+                        case "10040":
+                            unknownKey[3] = g;
+                            break;
+
+                        case "10041":
+                            unknownKey[4] = g;
+                    }
+                    return g;
+                },
+                getRequestTypeFromId: function (n) {
+                    return unknownKey[0] === n ? "1001" : unknownKey[1] === n ? "1002" : unknownKey[2] === n ?
+                        "1003" : unknownKey[3] === n ? "10040" : unknownKey[4] === n ? "10041" : 0;
+                },
+                convertLocation: function (n) {
+                    let g = n.toFixed(6);
+                    return parseInt(1e6 * g);
+                },
+                utf8ByteToUnicodeStr: function (n) {
+                    for (var g = "", p = 0; p < n.length;) {
+                        var e = n[p],
+                            a = 0;
+                        e >>> 7 == 0 ? (g += String.fromCharCode(n[p]), p += 1) : 252 == (252 & e) ? (a = (
+                            3 & n[p]) << 30,
+                            a |= (63 & n[p + 1]) << 24, a |= (63 & n[p + 2]) << 18, a |= (63 & n[p +
+                                3]) << 12,
+                            a |= (63 & n[p + 4]) << 6, a |= 63 & n[p + 5], g += String.fromCharCode(a),
+                            p += 6) : 248 == (248 & e) ? (a = (7 & n[p]) << 24,
+                                a |= (63 & n[p + 1]) << 18, a |= (63 & n[p + 2]) << 12, a |= (63 & n[p +
+                                    3]) << 6,
+                                a |= 63 & n[p + 4], g += String.fromCharCode(a), p += 5) : 240 == (240 &
+                                    e) ? (a = (15 & n[p]) << 18,
+                                        a |= (63 & n[p + 1]) << 12, a |= (63 & n[p + 2]) << 6, a |= 63 & n[p + 3],
+                                        g += String.fromCharCode(a),
+                                        p += 4) : 224 == (224 & e) ? (a = (31 & n[p]) << 12, a |= (63 & n[p + 1]) <<
+                                            6,
+                                            a |= 63 & n[p + 2], g += String.fromCharCode(a), p += 3) : 192 == (192 &
+                                                e) ? (a = (63 & n[p]) << 6,
+                                                    a |= 63 & n[p + 1], g += String.fromCharCode(a), p += 2) : (g += String
+                                                        .fromCharCode(n[p]),
+                                                        p += 1);
+                    }
+                    return g;
+                },
+
+
+                connectSocket: function () {
+                    this.socket = new WebSocket(this.url);
+                    this.socket.onclose = this.onSocketClose;
+                    this.socket.onerror = this.onSocketError;
+                    this.socket.onopen = this.onSocketOpen;
+                    this.socket.onmessage = this.onSocketMessage;
+                },
+
+                reconnectSocket: function () {
+                    this.addStatus("重连中");
+                    this.connectSocket();
+                },
+
+                onSocketOpen: function () {
+                    this.addStatus("WSS连接开启");
+                    this.notify("WSS连接开启");
+                    if (this.firstTime) {
+                        this.firstTime = false;
+                        this.getSettingFileName();
+                        this.getBossLevelConfig();
+                    }
+                },
+
+                onSocketMessage: function (event) {
+                    var blob = event.data;
+                    var arrayBuffer;
+
+                    if (typeof (blob) === "string") {
+                        // var ans = blob;
+                        // this.addStatusWithoutNewline("WSS连接信息：");
+                        // this.addStatus(ans);
+                    } else {
+                        let fileReader = new FileReader();
+                        fileReader.onload = e => {
+                            arrayBuffer = e.target.result;
+                            var n = this.utf8ByteToUnicodeStr(new Uint8Array(arrayBuffer).slice(4));
+                            //this.addStatusWithoutNewline("WSS连接信息：");
+                            //this.addStatus(n);
+                            var data = JSON.parse(n);
+                            this.handleMessage(data)
+                        };
+                        fileReader.readAsArrayBuffer(blob)
+                    }
+                },
+
+                onSocketClose: function () {
+                    this.addStatus("WSS连接关闭");
+                    this.notify("WSS连接关闭");
+                    // setTimeout(() => {
+                    //     this.addStatus("重连中");
+                    //     this.connectSocket();
+                    // }, this.reconnectTimeout);
+                },
+
+                onSocketError: function () {
+                    // this.addStatus("WSS连接错误");
+                    // this.notify("WSS连接错误");
+                    // setTimeout(() => {
+                    //     this.addStatus("重连中");
+                    //     this.connectSocket();
+                    // }, this.reconnectTimeout);
+                },
+
+
+                handleMessage: function (data) {
+                    console.log('handleMessage:' + JSON.stringify(data));
+                    var c = this.getRequestTypeFromId(data.requestid);
+                    switch (c) {
+                        case "10041":
+                            this.getVersionFileName(data.filename);
+                            break;
+                        case "10040":
+                            //console.log("妖灵等级", n), a.saveBossStartAndEndLevel(n.startlevel, n.endlevel);
+                            break;
+                        case "1001":
+                            console.log("获取到妖灵数量", data.sprite_list == null ? 0 : data.sprite_list.length);
+                            this.buildMarkersByData(data.sprite_list, 1);
+                            break;
+                        case "1002":
+                            console.log("获取到擂台数量", data.dojo_list == null ? 0 : data.dojo_list.length);
+                            this.buildMarkersByData(data.dojo_list, 2);
+                            break;
+                        default:
+                            console.log("test data", data);
+                            break;
+                    }
+                },
+                getVersionFileName: function (name) {
+                    if (name !== this.currVersion) {
+                        this.getYaolings();
+                        console.info("有新版本的妖灵库，请更新");
+                        this.messageWarning("有新版本的妖灵库，请更新");
+                    } else {
+                        this.getYaolings();
+                        console.info("已经是最新版本的妖灵库");
+                        this.messageWarning("已经是最新版本的妖灵库");
+                    }
+                },
+
+                buildMarkersByData: function (t, mode) {
+                    let that = this;
+                    if (t != null && t.length > 0) {
+                        for (let i = 0; i < t.length; i++) {
+                            let ti = t[i];
+
+                            if (mode === 1) {
+                                // 妖灵
+                                if (this.fit.length === 1 && this.fit[0] === "special") {
+
+                                } else {
+                                    if ($.inArray(ti.sprite_id, this.fit) === -1) continue;
+                                }
+                            } else if (mode === 2) {
+                                // 擂台
+
+                            }
+
+                            let m = this.buildSpiteMarker(ti, mode);
+                            let icon = new qq.maps.MarkerImage(m.iconPath,
+                                null, null, null, new qq.maps.Size(40, 40));
+                            let marker = new qq.maps.Marker({
+                                position: new qq.maps.LatLng(m.latitude, m.longitude),
+                                map: this.map
+                            });
+                            marker.setIcon(icon);
+                            let infoContent = null;
+                            if (mode === 2) {
+                                if (ti.winner_fightpower != null) {
+                                    infoContent = `<button>战力:${ti.winner_fightpower}</button><br /><button onclick="flyToPositionByLoc(${marker.position.lng},${marker.position.lat})">飞行</button>`;
+                                } else if (ti.starlevel != null) {
+                                    infoContent = `<button>${ti.starlevel}星BOSS,状态:${ti.state}</button><br /><button onclick="flyToPositionByLoc(${marker.position.lng},${marker.position.lat})">飞行</button>`;
+                                } else {
+                                    infoContent = `<button>未知</button><br /><button onclick="flyToPositionByLoc(${marker.position.lng},${marker.position.lat})">飞行</button>`;
+                                }
+                            } else {
+                                infoContent = `<button onclick="flyToPositionByLoc(${marker.position.lng},${marker.position.lat})">飞行</button>`;
+                            }
+                            qq.maps.event.addListener(marker, 'click', function () {
+                                that.infoWindow.open();
+                                that.infoWindow.setContent(infoContent);
+                                that.infoWindow.setPosition(marker.getPosition());
                             });
 
-                            //that.init();
-                        },
-                        function (e) {
-                            throw (e.message);
-                            //that.init();
+                            this.markers.push(marker);
                         }
-                    )
-                } else {
-                    that.init();
-                }
-            },
-            getYaolingInfo: function () {
-                if (!this.statusOK) return;
-                var e = {
-                    request_type: "1001",
-                    longtitude: this.convertLocation(this.location.longitude),
-                    latitude: this.convertLocation(this.location.latitude),
-                    requestid: this.genRequestId("1001"),
-                    platform: 0
-                };
-                // this.clearAllMarkers();
-                this.sendMessage(e, "1001");
-                this.drawRec(this.location.longitude, this.location.latitude);
-            },
-
-            getYaolingInfoByLocation: function (lng, loc) {
-                if (!this.statusOK) return;
-                var e = {
-                    request_type: "1001",
-                    longtitude: this.convertLocation(lng),
-                    latitude: this.convertLocation(loc),
-                    requestid: this.genRequestId("1001"),
-                    platform: 0
-                };
-                // this.clearAllMarkers();
-                this.sendMessage(e, "1001");
-                this.drawRec(lng, loc);
-            },
-
-            getLeitaiInfo: function () {
-                if (!this.statusOK || this.botMode)
-                    return;
-                var e = {
-                    request_type: "1002",
-                    longtitude: this.convertLocation(this.location.longitude),
-                    latitude: this.convertLocation(this.location.latitude),
-                    requestid: this.genRequestId("1002"),
-                    platform: 0
-                };
-                this.clearAllMarkers();
-                this.sendMessage(e, "1002");
-            },
-
-            moveToPosition: function (direction) {
-                let speed = 50;
-                console.log('Before Move GCJ02:' + this.location.longitude + ',' + this.location.latitude);
-                if (direction === 'd') {
-                    this.location.longitude = this.location.longitude + 0.00001 * speed;
-                } else if (direction === 'a') {
-                    this.location.longitude = this.location.longitude - 0.00001 * speed;
-                } else if (direction === 'w') {
-                    this.location.latitude = this.location.latitude + 0.00001 * speed;
-                } else if (direction === 's') {
-                    this.location.latitude = this.location.latitude - 0.00001 * speed;
-                }
-
-                console.log('After  Move GCJ02:' + this.location.longitude + ',' + this.location.latitude);
-                $.ajax({
-                    type: 'get',
-                    url: '/gps/lon/' + this.location.longitude + '/lat/' + this.location.latitude,
-                    success: function (data) {
-                        console.log(data);
-                    },
-                    error: function (err) {
-                        console.log(err)
                     }
-                });
-                this.setPosition(this.location.longitude, this.location.latitude);
-            },
+                    this.notify("筛选成功!");
+                },
 
-            flyToPosition: function () {
-                this.flyToPositionByLoc(this.location.longitude, this.location.latitude);
-            },
-
-            flyToPositionByLoc: function (lng, lat) {
-                $.ajax({
-                    type: 'get',
-                    url: '/gps/lon/' + lng + '/lat/' + lat,
-                    success: function (data) {
-                        console.log(data);
-                    },
-                    error: function (err) {
-                        console.log(err);
+                clearAllMarkers: function () {
+                    for (var i = 0; i < this.markers.length; i++) {
+                        this.markers[i].setMap(null);
                     }
-                });
-                this.notify("飞行成功!");
-                this.setPosition(lng, lat);
-                if (this.map != null) {
-                    this.map.setCenter(new qq.maps.LatLng(lat, lng));
-                }
-            },
+                    this.markers = [];
+                },
 
-            canSearch: function () {
-                if (!this.statusOK) {
-                    return false;
-                }
-                return true;
-            },
+                buildSpiteMarker: function (ti, mode) {
 
-            //大范围搜索
-            wideSearchYaoling: function (blockNum) {
-                if (!this.canSearch) return;
-
-                if (this.wideSearching) {
-                    if (this.wideSearchTimeout != null) {
-                        clearInterval(this.wideSearchTimeout);
-                    }
-                    this.clearRecs();
-                    this.wideSearching = false;
-                    return;
-                }
-
-                this.wideSearching = true;
-
-                var startLng = parseFloat(this.location.longitude);
-                var startLat = parseFloat(this.location.latitude);
-
-                for (var i = 0; i < blockNum; i++) {
-                    for (var j = 0; j < blockNum; j++) {
-                        var loc = {
-                            longitude: startLng,
-                            latitude: startLat
-                        };
-                        this.wideSearchQueue.push(loc);
-                        startLng += (this.lng_range_left + this.lng_range_right) / 2;
-                    }
-                    startLat -= this.lat_range;
-                    startLng = parseFloat(this.location.longitude);
-                }
-                console.log('wideSearchQueue:' + this.wideSearchQueue.length);
-                this.clearAllMarkers();
-                this.wideSearchQueue = this.wideSearchQueue.reverse();
-                this.wideSearchTimeout = setInterval(() => {
-                    var one = this.wideSearchQueue.pop();
-                    if (one != null) {
-                        this.getYaolingInfoByLocation(one.longitude, one.latitude);
+                    var icon = this.getHeadImagePath(ti, mode);
+                    return {
+                        // id: id,
+                        latitude: ti.latitude / 1e6,
+                        longitude: ti.longtitude / 1e6,
+                        iconPath: icon,
+                        width: 40,
+                        height: 40,
+                    };
+                },
+                //根据妖灵信息获取其icon地址
+                getHeadImagePath: function (e, mode) {
+                    if (mode === 1) {
+                        // 妖
+                        var webpath = "https://hy.gwgo.qq.com/sync/pet/";
+                        var a = this.getYaoling(e.sprite_id);
+                        if (null == a)
+                            return "original/image/default-head.png";
+                        var r = "original/image/head/" + a.ImgName + ".png";
+                        return pngs.indexOf(a.ImgName + ".png") >= 0 ? r : webpath + a.SmallImgPath;
+                    } else if (mode === 2) {
+                        // 擂台
+                        return "original/image/head/leitai.png";
                     } else {
-                        clearInterval(this.wideSearchTimeout);
+                        return "original/image/default-head.png";
                     }
-                }, 1000);
-            },
+                },
 
-            drawRec: function (lng, lat) {
-                for (var i = 0; i < this.drawRecs.length; i++) {
-                    var each = this.drawRecs[i];
-                    if (each.latitude === lat && each.longitude === lng) {
-                        this.notify("已扫描过!");
+                setFilter: function (str, f) {
+                    this.current_filter = f;
+                    this.addStatus("已修改筛选规则：" + str);
+                },
+
+                //消息通知
+                messageWarning: function (message) {
+                    this.notify(message);
+                },
+
+                arrayBufferToBase64: function (buffer) {
+                    var binary = '';
+                    var bytes = new Uint8Array(buffer);
+                    var len = bytes.byteLength;
+                    for (var i = 0; i < len; i++) {
+                        binary += String.fromCharCode(bytes[i]);
+                    }
+                    return window.btoa(binary);
+                },
+                abc1: function (e) {
+                    for (var n = new ArrayBuffer(2 * e.length), r = new Uint16Array(n), t = 0, o = e
+                        .length; t < o; t++) r[t] = e.charCodeAt(t);
+                    return r;
+                },
+                json2buffer: function (n) {
+                    var r = this.abc1(JSON.stringify(n)),
+                        t = r.length,
+                        o = new ArrayBuffer(4);
+                    new DataView(o).setUint32(0, t);
+                    var s = new Uint8Array(4 + t);
+                    return s.set(new Uint8Array(o), 0), s.set(r, 4), s.buffer;
+                },
+                addStatusWithoutNewline: function (str) {
+                    this.status += str;
+                },
+                addStatus: function (str) {
+                    this.status += str + "<br>";
+                },
+                sendMessage: function (message, requestIndex) {
+                    if (message.request_type != "1004") {
+                        this.addStatusWithoutNewline("WSS发送消息：");
+                        this.addStatus(JSON.stringify(message));
+                    }   
+                    this.socket.send(this.json2buffer(message));
+                },
+                getLocation: function () {
+                    var that = this;
+                    that.init();
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            function (position) {
+                                console.log(position);
+                                that.location.longitude = position.coords.longitude;
+                                that.location.latitude = position.coords.latitude;
+
+                                var pos = new qq.maps.LatLng(that.location.latitude, that.location
+                                    .longitude);
+                                that.map.panTo(pos);
+                                that.userMarker = new qq.maps.Marker({
+                                    position: pos,
+                                    map: that.map
+                                });
+
+                                //that.init();
+                            },
+                            function (e) {
+                                throw (e.message);
+                                //that.init();
+                            }
+                        )
+                    } else {
+                        that.init();
+                    }
+                },
+                getYaolingInfo: function () {
+                    if (!this.statusOK) return;
+                    var e = {
+                        request_type: "1001",
+                        longtitude: this.convertLocation(this.location.longitude),
+                        latitude: this.convertLocation(this.location.latitude),
+                        requestid: this.genRequestId("1001"),
+                        platform: 0
+                    };
+                    // this.clearAllMarkers();
+                    this.sendMessage(e, "1001");
+                    this.drawRec(this.location.longitude, this.location.latitude);
+                },
+
+                getYaolingInfoByLocation: function (lng, loc) {
+                    if (!this.statusOK) return;
+                    var e = {
+                        request_type: "1001",
+                        longtitude: this.convertLocation(lng),
+                        latitude: this.convertLocation(loc),
+                        requestid: this.genRequestId("1001"),
+                        platform: 0
+                    };
+                    // this.clearAllMarkers();
+                    this.sendMessage(e, "1001");
+                    this.drawRec(lng, loc);
+                },
+
+                getLeitaiInfo: function () {
+                    if (!this.statusOK || this.botMode)
+                        return;
+                    var e = {
+                        request_type: "1002",
+                        longtitude: this.convertLocation(this.location.longitude),
+                        latitude: this.convertLocation(this.location.latitude),
+                        requestid: this.genRequestId("1002"),
+                        platform: 0
+                    };
+                    this.clearAllMarkers();
+                    this.sendMessage(e, "1002");
+                },
+
+                moveToPosition: function (direction) {
+                    let speed = 50;
+                    console.log('Before Move GCJ02:' + this.location.longitude + ',' + this.location.latitude);
+                    if (direction === 'd') {
+                        this.location.longitude = this.location.longitude + 0.00001 * speed;
+                    } else if (direction === 'a') {
+                        this.location.longitude = this.location.longitude - 0.00001 * speed;
+                    } else if (direction === 'w') {
+                        this.location.latitude = this.location.latitude + 0.00001 * speed;
+                    } else if (direction === 's') {
+                        this.location.latitude = this.location.latitude - 0.00001 * speed;
+                    }
+
+                    console.log('After  Move GCJ02:' + this.location.longitude + ',' + this.location.latitude);
+                    $.ajax({
+                        type: 'get',
+                        url: '/gps/lon/' + this.location.longitude + '/lat/' + this.location.latitude,
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    });
+                    this.setPosition(this.location.longitude, this.location.latitude);
+                },
+
+                flyToPosition: function () {
+                    this.flyToPositionByLoc(this.location.longitude, this.location.latitude);
+                },
+
+                connectPhone: function () {
+                    $.ajax({
+                        type: 'get',
+                        url: '/gps/connect',
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    });
+                },
+
+                flyToPositionByLoc: function (lng, lat) {
+                    $.ajax({
+                        type: 'get',
+                        url: '/gps/lon/' + lng + '/lat/' + lat,
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                    this.notify("飞行成功!");
+                    this.setPosition(lng, lat);
+                    if (this.map != null) {
+                        this.map.setCenter(new qq.maps.LatLng(lat, lng));
+                    }
+                },
+
+                canSearch: function () {
+                    if (!this.statusOK) {
+                        return false;
+                    }
+                    return true;
+                },
+
+                //大范围搜索
+                wideSearchYaoling: function (blockNum) {
+                    if (!this.canSearch) return;
+
+                    if (this.wideSearching) {
+                        if (this.wideSearchTimeout != null) {
+                            clearInterval(this.wideSearchTimeout);
+                        }
+                        this.clearRecs();
+                        this.wideSearching = false;
                         return;
                     }
+
+                    this.wideSearching = true;
+
+                    var startLng = parseFloat(this.location.longitude);
+                    var startLat = parseFloat(this.location.latitude);
+
+                    for (var i = 0; i < blockNum; i++) {
+                        for (var j = 0; j < blockNum; j++) {
+                            var loc = {
+                                longitude: startLng,
+                                latitude: startLat
+                            };
+                            this.wideSearchQueue.push(loc);
+                            startLng += (this.lng_range_left + this.lng_range_right) / 2;
+                        }
+                        startLat -= this.lat_range;
+                        startLng = parseFloat(this.location.longitude);
+                    }
+                    console.log('wideSearchQueue:' + this.wideSearchQueue.length);
+                    this.clearAllMarkers();
+                    this.wideSearchQueue = this.wideSearchQueue.reverse();
+                    this.wideSearchTimeout = setInterval(() => {
+                        var one = this.wideSearchQueue.pop();
+                        if (one != null) {
+                            this.getYaolingInfoByLocation(one.longitude, one.latitude);
+                        } else {
+                            clearInterval(this.wideSearchTimeout);
+                        }
+                    }, 1000);
+                },
+
+                drawRec: function (lng, lat) {
+                    for (var i = 0; i < this.drawRecs.length; i++) {
+                        var each = this.drawRecs[i];
+                        if (each.latitude === lat && each.longitude === lng) {
+                            this.notify("已扫描过!");
+                            return;
+                        }
+                    }
+
+                    var x1 = lng - this.lng_range_left / 2;
+                    var x2 = lng + this.lng_range_right / 2;
+                    var y1 = lat - this.lat_range / 2;
+                    var y2 = lat + this.lat_range / 2;
+                    var path = [
+                        new qq.maps.LatLng(y1, x1),
+                        new qq.maps.LatLng(y2, x1),
+                        new qq.maps.LatLng(y2, x2),
+                        new qq.maps.LatLng(y1, x2)
+                    ];
+                    console.log('drawRec:' + path);
+                    var polygon = new qq.maps.Polygon({
+                        map: this.map,
+                        path: path,
+                        strokeColor: new qq.maps.Color(0, 0, 0, 0.8),
+                        fillColor: qq.maps.Color.fromHex("#FFFFFF", 0.5)
+                    });
+                    this.drawRecs.push(polygon);
+                },
+
+                clearRecs: function () {
+                    this.drawRecs = [];
+                },
+
+                getYaoling: function (n) {
+                    for (var g = this.yaolings, p = 0; p < g.length; p++)
+                        if (g[p].Id == n) return g[p];
+                    return null;
+                },
+                getSettingFileName: function () {
+                    var e = {
+                        request_type: "1004",
+                        cfg_type: 1,
+                        requestid: this.genRequestId("10041"),
+                        platform: 0
+                    };
+                    this.sendMessage(e, "10041");
+                    console.log("getSettingFileName");
+                },
+                getBossLevelConfig: function () {
+                    return;
+                    var e = {
+                        request_type: "1004",
+                        cfg_type: 0,
+                        requestid: this.genRequestId("10040"),
+                        platform: 0
+                    };
+                    this.sendMessage(e, "10040");
+                },
+
+                requestTest: function () {
+                    var e = {
+                        request_type: "1002",
+                        cfg_type: 1,
+                        requestid: this.genRequestId("10040"),
+                        platform: 0
+                    };
+                    this.sendMessage(e, null);
+                },
+
+                notify: function (message) {
+                    this.$notify({
+                        message: message,
+                        showClose: false,
+                        duration: 2000,
+                    });
                 }
-
-                var x1 = lng - this.lng_range_left / 2;
-                var x2 = lng + this.lng_range_right / 2;
-                var y1 = lat - this.lat_range / 2;
-                var y2 = lat + this.lat_range / 2;
-                var path = [
-                    new qq.maps.LatLng(y1, x1),
-                    new qq.maps.LatLng(y2, x1),
-                    new qq.maps.LatLng(y2, x2),
-                    new qq.maps.LatLng(y1, x2)
-                ];
-                console.log('drawRec:' + path);
-                var polygon = new qq.maps.Polygon({
-                    map: this.map,
-                    path: path,
-                    strokeColor: new qq.maps.Color(0, 0, 0, 0.8),
-                    fillColor: qq.maps.Color.fromHex("#FFFFFF", 0.5)
-                });
-                this.drawRecs.push(polygon);
             },
+            computed: {
+                fit: function () {
+                    var ans = [];
+                    if (this.settings.fit.all) {
+                        ans = ["special"];
+                        return ans;
+                    }
 
-            clearRecs: function () {
-                this.drawRecs = [];
-            },
+                    if (this.settings.fit.t1) ans = _.union(ans, this.filter_t1);
+                    if (this.settings.fit.t2) ans = _.union(ans, this.filter_t2);
+                    if (this.settings.fit.nest) ans = _.union(ans, this.filter_nest);
+                    if (this.settings.fit.fish) ans = _.union(ans, this.filter_fish);
+                    if (this.settings.fit.rare) ans = _.union(ans, this.filter_rare);
+                    if (this.settings.fit.feature) ans = _.union(ans, this.filter_feature);
+                    if (this.settings.fit.element) ans = _.union(ans, this.filter_element);
+                    if (this.settings.fit.ghost) ans = _.union(ans, this.filter_ghost);
+                    if (this.settings.fit.life_winner) ans = _.union(ans, this.filter_life_winner);
+                    if (this.settings.fit.stars_28) ans = _.union(ans, this.filter_stars_28);
 
-            getYaoling: function (n) {
-                for (var g = this.yaolings, p = 0; p < g.length; p++)
-                    if (g[p].Id == n) return g[p];
-                return null;
-            },
-
-
-            getSettingFileName: function () {
-                var e = {
-                    request_type: "1004",
-                    cfg_type: 1,
-                    requestid: this.genRequestId("10041"),
-                    platform: 0
-                };
-                this.sendMessage(e, "10041");
-            },
-            getBossLevelConfig: function () {
-                return;
-                var e = {
-                    request_type: "1004",
-                    cfg_type: 0,
-                    requestid: this.genRequestId("10040"),
-                    platform: 0
-                };
-                this.sendMessage(e, "10040");
-            },
-
-            requestTest: function () {
-                var e = {
-                    request_type: "1002",
-                    cfg_type: 1,
-                    requestid: this.genRequestId("10040"),
-                    platform: 0
-                };
-                this.sendMessage(e, null);
-            },
-
-            notify: function (message) {
-                this.$notify({
-                    message: message,
-                    showClose: false,
-                    duration: 2000,
-                });
-            }
-        },
-        computed: {
-            fit: function () {
-
-                var ans = [];
-                if (this.settings.fit.all) {
-                    ans = ["special"];
                     return ans;
                 }
-
-                if (this.settings.fit.t1) ans = _.union(ans, this.filter_t1);
-                if (this.settings.fit.t2) ans = _.union(ans, this.filter_t2);
-                if (this.settings.fit.nest) ans = _.union(ans, this.filter_nest);
-                if (this.settings.fit.fish) ans = _.union(ans, this.filter_fish);
-                if (this.settings.fit.rare) ans = _.union(ans, this.filter_rare);
-                if (this.settings.fit.feature) ans = _.union(ans, this.filter_feature);
-                if (this.settings.fit.element) ans = _.union(ans, this.filter_element);
-                if (this.settings.fit.ghost) ans = _.union(ans, this.filter_ghost);
-                if (this.settings.fit.life_winner) ans = _.union(ans, this.filter_life_winner);
-
-                return ans;
-            }
+            },
+        });
+        app.$watch('settings', function (newV, oldV) {
+            console.log(111);
+            app.flashCookies();
         },
-    });
-    app.$watch('settings', function (newV, oldV) {
-        console.log(111);
-        app.flashCookies();
-    }, {
-        deep: true
-    });
-</script>
+            {
+                deep: true
+            }
+        );
+    </script>
 </body>
+
 </html>

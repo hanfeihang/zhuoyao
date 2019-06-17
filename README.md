@@ -33,7 +33,7 @@
 
 iOS
   - 使用Xcode的Simulation功能进行虚拟定位。新建Location.gpx，将该文件导入Xcode作为虚拟定位文件。将文件路径赋值给iOS_gps.js内的变量gpx_file_position。
-  - 使用osacomplie指令对apple_script文件夹内的脚本进行编译，产出可执行脚本。将脚本路径赋值给iOS_gps.js内的变量apple_script_position。
+  - 使用osacompile指令对apple_script文件夹内的脚本进行编译，产出可执行脚本。将脚本路径赋值给iOS_gps.js内的变量apple_script_position。
   - 进入项目目录，执行指令 npm install && npm start
   - 使用浏览器访问 http://localhost:8080/
  
